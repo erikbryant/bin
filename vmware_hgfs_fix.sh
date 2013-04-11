@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PATCH_DIR=`echo $0 | sed s:[^/]*$::1`
+PATCH_DIR=`pwd`
 
 pushd lib/modules/source
 if [[ ! -f vmhgfs.tar.orig ]]
