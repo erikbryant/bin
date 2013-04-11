@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PATCH_DIR=`pwd`
+PATCH_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 pushd lib/modules/source
 if [[ ! -f vmhgfs.tar.orig ]]

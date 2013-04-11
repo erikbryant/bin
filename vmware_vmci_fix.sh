@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PATCH_DIR=`echo $0 | sed s:[^/]*$::1`
+PATCH_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 pushd lib/modules/source
 if [[ ! -f vmci.tar.orig ]]
