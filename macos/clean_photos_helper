@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# xattr is amazingly slow. Only call it if you
+# are absolutely certain the file actually has
+# extended attributes. Thus the use of ls as a
+# pre-check.
+
+a=$( ls -aBl@ "$1" | grep "@" )
+if [[ ${#a} > 0 ]]
+then
+  # ls -l@ "$1"
+  xattr -c "$1"
+fi

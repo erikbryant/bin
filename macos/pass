@@ -1,0 +1,23 @@
+#!/bin/bash
+
+DMG=~/Dropbox/personal3.dmg
+VOL=/Volumes/personal2
+DETACH=0
+
+while [ ! -d ${VOL?} ]; do
+  hdiutil attach -quiet -readonly ${DMG?}
+  DETACH=1
+done
+
+if [ $# -eq 0 ]; then
+  read -p "Search for: " SEARCH_STRING
+  echo
+else
+  SEARCH_STRING="$@"
+fi
+
+egrep -i --no-filename --context=10 --color=always ${SEARCH_STRING?} ${VOL?}/netlog/*
+
+if [ "$DETACH" -ne "0" ]; then
+  hdiutil detach -quiet ${VOL?}
+fi

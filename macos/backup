@@ -1,0 +1,85 @@
+#!/bin/bash -e
+
+DRIVES=$1
+if [[ ${DRIVES?} -lt 1 ]] ; then
+  DRIVES=2
+fi
+if [[ ${DRIVES?} -gt 2 ]] ; then
+  echo "Can only backup to 1 or 2 drives. Invalid count: ${DRIVES?}"
+  exit 1
+fi
+
+echo "Backup up to ${DRIVES?} drives"
+
+function healthFail() {
+  echo "The health check failed."
+  echo "Run disk utility and select First Aid."
+  exit 1
+}
+
+function healthCheck() {
+  dname=$( mount | egrep $1 | awk '{ print $1 }' )
+
+  sudo fsck_hfs -fy -l ${dname?} || healthFail
+}
+
+function AssertMounted() {
+  if [[ ! -d $1 ]]
+  then
+    echo "ERROR: There is no backup drive mounted in: $1"
+    exit 1
+  fi
+
+  driveCount=$2
+
+  # Sometimes stray directories are left behind in /Volumes
+  # even if no device is mounted there. Watch for that.
+  mounts=$( ls -d /Volumes/Apricorn* | wc -l )
+  if [[ $mounts -gt ${driveCount?} ]]; then
+    echo "ERROR: There are too many /Volumes/Apricorn* mounts"
+    exit 1
+  fi
+  if [[ $mounts -lt ${driveCount?} ]]; then
+    echo "ERROR: There are too few /Volumes/Apricorn* mounts"
+    exit 1
+  fi
+
+  healthCheck $1
+}
+
+drive=/Volumes/Apricorn
+drive2=/Volumes/Apricorn2
+
+AssertMounted ${drive?} ${DRIVES?}
+if [[ ${DRIVES?} -gt 1 ]] ; then
+  echo ""
+  AssertMounted ${drive2?} ${DRIVES?}
+fi
+
+echo ""
+
+computer=$( hostname )
+mkdir -p ${drive?}/${computer?}
+
+src="/Users/erikbryant"
+echo "rsync ${src?}"
+dest=${drive?}/${computer?}/${src?}
+mkdir -p ${dest?}
+
+FS_EXCLUDES='--exclude=/.Spotlight-V100/ --exclude=/.fseventsd/ --exclude=/.DocumentRevisions-V100/ --exclude=/.TemporaryItems/ --exclude=/.Trashes/'
+
+rsync -a --delete --itemize-changes ${src?}/ ${dest?}
+
+src="/Users/photos"
+if [[ -d ${src?} ]]
+then
+  echo "rsync ${src?}"
+  dest=${drive?}/${computer?}/${src?}
+  mkdir -p ${dest?}
+  rsync -a --delete ${src?}/ ${dest?}
+fi
+
+if [[ ${DRIVES?} -gt 1 ]] ; then
+  echo "Syncing drives together ..."
+  rsync -a --delete --itemize-changes ${FS_EXCLUDES?} ${drive?}/ ${drive2?}
+fi
