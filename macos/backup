@@ -18,7 +18,7 @@ function healthFail() {
 }
 
 function healthCheck() {
-  dname=$( mount | egrep $1 | awk '{ print $1 }' )
+  dname=$( mount | egrep "$1 " | awk '{ print $1 }' )
 
   sudo fsck_hfs -fy -l ${dname?} || healthFail
 }
@@ -43,17 +43,17 @@ function AssertMounted() {
     echo "ERROR: There are too few /Volumes/Apricorn* mounts"
     exit 1
   fi
-
-  healthCheck $1
 }
 
 drive=/Volumes/Apricorn
 drive2=/Volumes/Apricorn2
 
 AssertMounted ${drive?} ${DRIVES?}
+healthCheck ${drive?}
 if [[ ${DRIVES?} -gt 1 ]] ; then
   echo ""
   AssertMounted ${drive2?} ${DRIVES?}
+  healthCheck ${drive2?}
 fi
 
 echo ""
@@ -66,9 +66,7 @@ echo "rsync ${src?}"
 dest=${drive?}/${computer?}/${src?}
 mkdir -p ${dest?}
 
-FS_EXCLUDES='--exclude=/.Spotlight-V100/ --exclude=/.fseventsd/ --exclude=/.DocumentRevisions-V100/ --exclude=/.TemporaryItems/ --exclude=/.Trashes/'
-
-rsync -a --delete --itemize-changes ${src?}/ ${dest?}
+rsync -a --delete --itemize-changes --exclude-from=backup.exclude ${src?}/ ${dest?}
 
 src="/Users/photos"
 if [[ -d ${src?} ]]
@@ -81,5 +79,5 @@ fi
 
 if [[ ${DRIVES?} -gt 1 ]] ; then
   echo "Syncing drives together ..."
-  rsync -a --delete --itemize-changes ${FS_EXCLUDES?} ${drive?}/ ${drive2?}
+  rsync -a --delete --itemize-changes --exclude-from=backup.exclude.fs ${drive?}/ ${drive2?}
 fi
