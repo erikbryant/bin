@@ -1,0 +1,20 @@
+#!/bin/bash
+
+if [[ "$1" == "" ]] ; then
+	echo "Usage: $( basename $0 ) staging-dir"
+	exit 1
+fi
+
+staging="$1"
+
+if [ ! -x ${staging?} ] ; then
+	echo "No such directory: ${staging?}"
+	exit
+fi
+
+for f in ${staging?}/* ; do
+	xattr -w com.erikbryant.uploaded 1 ${f?}
+	rm -f ${f?}
+done
+
+rmdir "${staging?}"

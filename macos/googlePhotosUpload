@@ -1,0 +1,61 @@
+#!/bin/bash -e
+
+staging=/Volumes/Apricorn/staging.$(date "+%Y%m%dT%H%M%S")/
+# staging=/Volumes/Apricorn/staging/
+mkdir -p ${staging?}
+
+MAX_FILES=2000
+
+EXTENSIONS='jpg jpeg JPG JPEG NEF RW2 bmp gif PNG png'
+EXTENSIONS="png|gif|bmp|jpg|jpeg|NEF|RW2"
+
+SKIP_LIST="D02_2887.NEF D02_2888.NEF D02_2889.NEF D02_5263.NEF D02_5324.NEF D02_5322.NEF D02_5323.NEF D02_5325.NEF D02_5440.NEF D02_5327.NEF D02_5328.NEF D02_5447.NEF D02_5634.NEF D02_5635.NEF D02_5636.NEF D02_5637.NEF D02_5826.NEF"
+
+COUNT=0
+for f in $( find /Volumes/Apricorn/photos/[a-z]* -type f | egrep -i "[.](${EXTENSIONS?})$" ) ; do
+	TARGET=$( basename ${f?} )
+
+	# Do we already have a file with this name in staging?
+	if [ -f ${staging?}/${TARGET?} ] ; then
+		# echo "Skipping duplicate file ${TARGET?} ..."
+		continue
+	fi
+
+	# Is this file blacklisted?
+	SKIP_IT=0
+	for skip in ${SKIP_LIST?} ; do
+		if [[ "${TARGET}" == "${skip?}" ]] ; then
+			SKIP_IT=1
+			break
+		fi
+	done
+	if [[ ${SKIP_IT?} -eq 1 ]] ; then
+		echo "Skipping blackisted file ${TARGET?} ..."
+		continue
+	fi
+
+	# Have we already uploaded this file?
+	ATTR=$( xattr -p com.erikbryant.uploaded ${f?} || true )
+	if [[ "${ATTR?}" == "1" ]] ; then
+		# echo "Skipping uploaded file ${TARGET?} ..."
+		continue
+	fi
+
+	# We like this file! Put it in staging. Make it a hardlink
+	# so that when we later mark it with an xattr the original
+	# file will also get the xattr. xattr does not pass through
+	# soft links.
+	ln ${f?} ${staging?}/${TARGET?}
+
+	COUNT=$(( ${COUNT?} + 1 ))
+	if [[ ${COUNT?} -ge ${MAX_FILES?} ]] ; then
+		# Roll to the next staging directory and reset the count.
+		COUNT=0
+		staging=/Volumes/Apricorn/staging.$(date "+%Y%m%dT%H%M%S")/
+		mkdir -p ${staging?}
+		echo "Rolled to ${staging?} ..."
+		# echo "Found enough files (${COUNT?}) ..."
+		# break
+	fi
+done
+
