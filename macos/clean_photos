@@ -17,7 +17,7 @@ do
 
   echo
   echo "Removing extended attributes from ${PHOTOROOT?} ..."
-  # Is much faster to use: ls -ablR@ | grep "@"
+  # Is much faster to use: ls -ablR@ | egrep "@"
   find ${PHOTOROOT?} -exec ${HELPER?} "{}" \;
 
   echo
@@ -26,8 +26,14 @@ do
 
   echo
   echo "Fixing permissions on files/dirs in ${PHOTOROOT?} ..."
-  chown -R root:wheel ${PHOTOROOT?}
+  # chown -R root:wheel ${PHOTOROOT?}
   find ${PHOTOROOT?} -type f -exec chmod 644 "{}" \;
   find ${PHOTOROOT?} -type d -exec chmod 555 "{}" \;
+
+  echo
+  echo "Searching for corrupt images in ${PHOTOROOT?} ..."
+  for f in $( find ${PHOTOROOT?} -type f ) ; do
+	identify ${f?} 1>&-
+  done
 done
 
