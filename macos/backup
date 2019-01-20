@@ -1,5 +1,7 @@
 #!/bin/bash -eu
 
+ROOT=$( dirname $0 )
+
 DRIVES=$1
 if [[ ${DRIVES} -lt 1 ]] ; then
   DRIVES=2
@@ -66,7 +68,7 @@ echo "rsync ${src}"
 dest=${drive}/${computer}/${src}
 mkdir -p ${dest}
 
-rsync -a --delete --itemize-changes --exclude-from=backup.exclude ${src}/ ${dest}
+rsync -a --delete --itemize-changes --exclude-from=${ROOT}/backup.exclude ${src}/ ${dest}
 
 src="/Users/photos"
 if [[ -d ${src} ]]
@@ -79,5 +81,5 @@ fi
 
 if [[ ${DRIVES} -gt 1 ]] ; then
   echo "Syncing drives together ..."
-  rsync -a --delete --itemize-changes --exclude-from=backup.exclude.fs ${drive}/ ${drive2}
+  rsync -a --delete --itemize-changes --exclude-from=${ROOT}/backup.exclude.fs ${drive}/ ${drive2}
 fi
