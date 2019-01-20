@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -u
 
 if [[ "$1" == "" ]] ; then
 	echo "Usage: $( basename $0 ) staging-dir"
@@ -7,14 +7,14 @@ fi
 
 staging="$1"
 
-if [ ! -x ${staging?} ] ; then
-	echo "No such directory: ${staging?}"
+if [ ! -x ${staging} ] ; then
+	echo "No such directory: ${staging}"
 	exit
 fi
 
-for f in ${staging?}/* ; do
-	xattr -w com.erikbryant.uploaded 1 ${f?}
-	rm -f ${f?}
+for f in ${staging}/* ; do
+	xattr -w com.erikbryant.uploaded 1 ${f}
+	rm -f ${f}
 done
 
-rmdir "${staging?}"
+rmdir "${staging}"

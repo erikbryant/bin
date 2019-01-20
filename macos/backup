@@ -1,15 +1,15 @@
-#!/bin/bash -e
+#!/bin/bash -eu
 
 DRIVES=$1
-if [[ ${DRIVES?} -lt 1 ]] ; then
+if [[ ${DRIVES} -lt 1 ]] ; then
   DRIVES=2
 fi
-if [[ ${DRIVES?} -gt 2 ]] ; then
-  echo "Can only backup to 1 or 2 drives. Invalid count: ${DRIVES?}"
+if [[ ${DRIVES} -gt 2 ]] ; then
+  echo "Can only backup to 1 or 2 drives. Invalid count: ${DRIVES}"
   exit 1
 fi
 
-echo "Backup up to ${DRIVES?} drives"
+echo "Backup up to ${DRIVES} drives"
 
 function healthFail() {
   echo "The health check failed."
@@ -20,7 +20,7 @@ function healthFail() {
 function healthCheck() {
   dname=$( mount | egrep "$1 " | awk '{ print $1 }' )
 
-  sudo fsck_hfs -fy -l ${dname?} || healthFail
+  sudo fsck_hfs -fy -l ${dname} || healthFail
 }
 
 function AssertMounted() {
@@ -35,11 +35,11 @@ function AssertMounted() {
   # Sometimes stray directories are left behind in /Volumes
   # even if no device is mounted there. Watch for that.
   mounts=$( ls -d /Volumes/Apricorn* | wc -l )
-  if [[ $mounts -gt ${driveCount?} ]]; then
+  if [[ $mounts -gt ${driveCount} ]]; then
     echo "ERROR: There are too many /Volumes/Apricorn* mounts"
     exit 1
   fi
-  if [[ $mounts -lt ${driveCount?} ]]; then
+  if [[ $mounts -lt ${driveCount} ]]; then
     echo "ERROR: There are too few /Volumes/Apricorn* mounts"
     exit 1
   fi
@@ -48,36 +48,36 @@ function AssertMounted() {
 drive=/Volumes/Apricorn
 drive2=/Volumes/Apricorn2
 
-AssertMounted ${drive?} ${DRIVES?}
-healthCheck ${drive?}
-if [[ ${DRIVES?} -gt 1 ]] ; then
+AssertMounted ${drive} ${DRIVES}
+healthCheck ${drive}
+if [[ ${DRIVES} -gt 1 ]] ; then
   echo ""
-  AssertMounted ${drive2?} ${DRIVES?}
-  healthCheck ${drive2?}
+  AssertMounted ${drive2} ${DRIVES}
+  healthCheck ${drive2}
 fi
 
 echo ""
 
 computer=$( hostname )
-mkdir -p ${drive?}/${computer?}
+mkdir -p ${drive}/${computer}
 
 src="/Users/erikbryant"
-echo "rsync ${src?}"
-dest=${drive?}/${computer?}/${src?}
-mkdir -p ${dest?}
+echo "rsync ${src}"
+dest=${drive}/${computer}/${src}
+mkdir -p ${dest}
 
-rsync -a --delete --itemize-changes --exclude-from=backup.exclude ${src?}/ ${dest?}
+rsync -a --delete --itemize-changes --exclude-from=backup.exclude ${src}/ ${dest}
 
 src="/Users/photos"
-if [[ -d ${src?} ]]
+if [[ -d ${src} ]]
 then
-  echo "rsync ${src?}"
-  dest=${drive?}/${computer?}/${src?}
-  mkdir -p ${dest?}
-  rsync -a --delete ${src?}/ ${dest?}
+  echo "rsync ${src}"
+  dest=${drive}/${computer}/${src}
+  mkdir -p ${dest}
+  rsync -a --delete ${src}/ ${dest}
 fi
 
-if [[ ${DRIVES?} -gt 1 ]] ; then
+if [[ ${DRIVES} -gt 1 ]] ; then
   echo "Syncing drives together ..."
-  rsync -a --delete --itemize-changes --exclude-from=backup.exclude.fs ${drive?}/ ${drive2?}
+  rsync -a --delete --itemize-changes --exclude-from=backup.exclude.fs ${drive}/ ${drive2}
 fi
