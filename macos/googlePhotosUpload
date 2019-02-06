@@ -6,13 +6,14 @@ mkdir -p ${staging}
 
 MAX_FILES=2000
 
-EXTENSIONS='jpg jpeg JPG JPEG NEF RW2 bmp gif PNG png'
-EXTENSIONS="png|gif|bmp|jpg|jpeg|NEF|RW2"
+# Google Photos does not accept .RW2 files. Do not try to upload those.
+EXTENSIONS="png|gif|bmp|jpg|jpeg|NEF"
 
 SKIP_LIST="D02_2887.NEF D02_2888.NEF D02_2889.NEF D02_5263.NEF D02_5324.NEF D02_5322.NEF D02_5323.NEF D02_5325.NEF D02_5440.NEF D02_5327.NEF D02_5328.NEF D02_5447.NEF D02_5634.NEF D02_5635.NEF D02_5636.NEF D02_5637.NEF D02_5826.NEF"
+SKIP_LIST=
 
 COUNT=0
-for f in $( find /Volumes/Apricorn/photos/[a-z]* -type f | egrep -i "[.](${EXTENSIONS})$" ) ; do
+for f in $( find /Volumes/Apricorn/photos/[2a-z]* -type f | egrep -i "[.](${EXTENSIONS})$" ) ; do
 	TARGET=$( basename ${f} )
 
 	# Do we already have a file with this name in staging?

@@ -1,35 +1,49 @@
-#!/bin/bash -eu
+#!/usr/local/bin/bash -eu
 
 ROOT=$( dirname $0 )
+
+function usage() {
+  echo $@
+  echo
+  echo "Usage: $( basename $0 ) 1|2 [--no-health-check]"
+  exit 1
+}
+
+[ $# -gt 1 ] || usage "ERROR: You must supply an argument."
 
 DRIVES=$1
 if [[ ${DRIVES} -lt 1 ]] ; then
   DRIVES=2
 fi
 if [[ ${DRIVES} -gt 2 ]] ; then
-  echo "Can only backup to 1 or 2 drives. Invalid count: ${DRIVES}"
-  exit 1
+  usage "ERROR: Can only backup to 1 or 2 drives. Invalid count: ${DRIVES}"
 fi
+
+HEALTH_CHECK=1
+if [ $# -gt 1 ] ; then
+	if [[ "$2" == "--no-health-check" ]] ; then
+		HEALTH_CHECK=0
+	fi
+fi
+
 
 echo "Backup up to ${DRIVES} drives"
 
-function healthFail() {
-  echo "The health check failed."
-  echo "Run disk utility and select First Aid."
-  exit 1
-}
-
 function healthCheck() {
+  if [[ ${HEALTH_CHECK} -eq 0 ]] ; then
+    echo "Skipping drive health check ..."
+    return
+  fi
+
   dname=$( mount | egrep "$1 " | awk '{ print $1 }' )
 
-  sudo fsck_hfs -fy -l ${dname} || healthFail
+  sudo fsck_hfs -fy -l ${dname} || usage "Health check failed. Run disk utility and select First Aid."
 }
 
 function AssertMounted() {
   if [[ ! -d $1 ]]
   then
-    echo "ERROR: There is no backup drive mounted in: $1"
-    exit 1
+    usage "ERROR: There is no backup drive mounted in: $1"
   fi
 
   driveCount=$2
@@ -38,12 +52,10 @@ function AssertMounted() {
   # even if no device is mounted there. Watch for that.
   mounts=$( ls -d /Volumes/Apricorn* | wc -l )
   if [[ $mounts -gt ${driveCount} ]]; then
-    echo "ERROR: There are too many /Volumes/Apricorn* mounts"
-    exit 1
+    usage "ERROR: There are too many /Volumes/Apricorn* mounts"
   fi
   if [[ $mounts -lt ${driveCount} ]]; then
-    echo "ERROR: There are too few /Volumes/Apricorn* mounts"
-    exit 1
+    usage "ERROR: There are too few /Volumes/Apricorn* mounts"
   fi
 }
 
