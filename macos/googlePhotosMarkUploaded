@@ -1,20 +1,35 @@
 #!/bin/bash -u
 
-if [[ "$1" == "" ]] ; then
-	echo "Usage: $( basename $0 ) staging-dir"
+function usage() {
+	echo "$@"
+	echo
+	echo "Usage: $( basename $0 ) staging-dir [--no-delete]"
 	exit 1
-fi
+}
+
+[ $# -gt 0 ] || usage "You must supply at least one argument."
+[ $# -le 2 ] || usage "Too many arguments."
 
 staging="$1"
 
-if [ ! -x ${staging} ] ; then
-	echo "No such directory: ${staging}"
-	exit
+DELETE=1
+if [ $# -gt 1 ] ; then
+	if [[ "$2" == "--no-delete" ]] ; then
+		DELETE=0
+	else
+		usage "Unrecognized flag: $2"
+	fi
 fi
+
+[ -x ${staging} ] || usage "No such directory: ${staging}"
 
 for f in ${staging}/* ; do
 	xattr -w com.erikbryant.uploaded 1 ${f}
-	rm -f ${f}
+	if [[ ${DELETE} -eq 1 ]] ; then
+		rm -f ${f}
+	fi
 done
 
-rmdir "${staging}"
+if [[ ${DELETE} -eq 1 ]] ; then
+	rmdir "${staging}"
+fi
