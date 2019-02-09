@@ -46,9 +46,10 @@ fi
 [ -d "$2" ] || usage "$2 is not a directory"
 
 DATE=$1
+cd $2
 
 TIME="1010.10"
-for f in "$2" ; do
+for f in * ; do
 	ACCMOD="${DATE}${TIME}"
 	touch -t ${ACCMOD} "${f}"
 	TIME=$( increment ${TIME} )
