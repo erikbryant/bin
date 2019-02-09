@@ -1,4 +1,4 @@
-#!/bin/bash -eu
+#!/usr/local/bin/bash -eu
 
 if [[ "$1" == "" ]]
 then

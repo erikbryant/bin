@@ -1,4 +1,4 @@
-#!/bin/bash -eu
+#!/usr/local/bin/bash -eu
 
 staging=/Volumes/Apricorn/staging.$(date "+%Y%m%dT%H%M%S")/
 mkdir -p ${staging}
