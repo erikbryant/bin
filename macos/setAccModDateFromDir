@@ -1,0 +1,22 @@
+#!/usr/local/bin/bash -eu
+
+function usage() {
+  echo "$@"
+  echo
+  echo "Usage: $( basename $0 ) dirName"
+  echo
+  echo "Where dirName is of the form: foo/bar/bas/YYYYMMDD.*"
+  exit 1
+}
+
+[ $# -eq 1 ] || usage 'Wrong number of arguments.'
+
+DATED_DIR=$1
+
+DATE=$( basename "${DATED_DIR}" )
+DATE=${DATE:0:8}
+echo ${DATE} | egrep "^\d{8}$" > /dev/null || usage "Could not extract date from ${DATED_DIR}. Found ${DATE}."
+
+ROOT=$( dirname $0 )
+
+$ROOT/setAccModDate $DATE "${DATED_DIR}"
