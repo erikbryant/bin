@@ -3,12 +3,12 @@
 function usage() {
 	echo "$@"
 
-	echo "Usage: $( basename $0 ) CCYYMMDD"
+	echo "Usage: $( basename $0 ) CCYYMMDD dirName"
 	echo
-	echo "Sets the creation and modified date on all files"
-	echo "in the current directory to CCYYMMDDhhmm.SS where"
+	echo "Sets the creation and modified date on all entries"
+	echo "in 'dirName' directory to CCYYMMDDhhmm.SS where"
 	echo "CCYYMMDD is passed in and hhmm.ss starts at 1010.00"
-	echo "and increments for each file in lexical order."
+	echo "and increments for each entry in lexical order."
 
 	exit 1
 }
@@ -39,15 +39,17 @@ function increment() {
 	echo "${HOUR}${MIN}.${SEC}"
 }
 
-if [[ $# -ne 1 ]] ; then
-	usage 'You must supply an argument'
+if [[ $# -ne 2 ]] ; then
+	usage 'You must supply two arguments'
 fi
+
+[ -d "$2" ] || usage "$2 is not a directory"
 
 DATE=$1
 
 TIME="1010.10"
-for f in * ; do
+for f in "$2" ; do
 	ACCMOD="${DATE}${TIME}"
-	touch -t ${ACCMOD} ${f}
+	touch -t ${ACCMOD} "${f}"
 	TIME=$( increment ${TIME} )
 done
