@@ -1,7 +1,22 @@
 #!/usr/local/bin/bash -eu
 
+function usage() {
+	echo "$@"
+	echo
+	echo "Usage: $( basename $0 ) dirName"
+	echo
+	echo "Where 'dirName' is the dir pattern to pass to"
+	echo "find for finding files."
+	exit 1
+}
+
+[ $# -eq 1 ] || usage 'Wrong number of parameters'
+
+ROOT_DIR="$1"
+
 staging=/Volumes/Apricorn/staging.$(date "+%Y%m%dT%H%M%S")/
 mkdir -p ${staging}
+echo "Staging files to ${staging}"
 
 MAX_FILES=2000
 
@@ -11,7 +26,7 @@ EXTENSIONS="png|gif|bmp|jpg|jpeg|NEF"
 SKIP_LIST="D02_0362.NEF D02_0363.NEF D02_0479.NEF D02_0510.NEF D02_0511.NEF D02_2887.NEF D02_2888.NEF D02_2889.NEF D02_3550.NEF D02_3553.NEF D02_3554.NEF D02_3555.NEF D02_3556.NEF D02_3557.NEF D02_3558.NEF D02_4056_edited.NEF D02_4057_edited.NEF D02_5263.NEF D02_5322.NEF D02_5323.NEF D02_5324.NEF D02_5325.NEF D02_5327.NEF D02_5328.NEF D02_5440.NEF D02_5447.NEF D02_5634.NEF D02_5635.NEF D02_5636.NEF D02_5637.NEF D02_5826.NEF D02_6867.NEF D02_7565.NEF D02_7566.NEF D02_7585_sarah.NEF D02_7620.NEF D02_7628.NEF D02_7644.NEF D02_7656.NEF D02_7658.NEF D02_7675.NEF D02_7712.NEF D02_7714.NEF D02_7717.NEF D02_7720.NEF D02_7721.NEF D02_7722.NEF D02_7723.NEF D02_7732.NEF D02_7758.NEF D02_7785.NEF D02_7786.NEF D02_7789.NEF D02_7810.NEF D02_7812.NEF D02_7814.NEF D02_7816.NEF D02_7817.NEF D02_7818.NEF D02_7821.NEF D02_7882.NEF"
 
 COUNT=0
-for f in $( find /Volumes/Apricorn/photos/[2a-z]* -type f | egrep -i "[.](${EXTENSIONS})$" ) ; do
+for f in $( find "${ROOT_DIR}" -type f | egrep -i "[.](${EXTENSIONS})$" ) ; do
 	TARGET=$( basename ${f} )
 
 	# Do we already have a file with this name in staging?
