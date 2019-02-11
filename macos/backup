@@ -9,7 +9,8 @@ function usage() {
   exit 1
 }
 
-[ $# -gt 1 ] || usage "ERROR: You must supply an argument."
+[ $# -ge 1 ] || usage "ERROR: You must supply an argument."
+[ $# -le 2 ] || usage "ERROR: Too many arguments."
 
 DRIVES=$1
 if [[ ${DRIVES} -lt 1 ]] ; then
@@ -94,4 +95,7 @@ fi
 if [[ ${DRIVES} -gt 1 ]] ; then
   echo "Syncing drives together ..."
   rsync -a --delete --itemize-changes --exclude-from=${ROOT}/backup.exclude.fs ${drive}/ ${drive2}
+  echo
+  echo 'Syncing extended attributes ...'
+  rsync -a --delete --itemize-changes --exclude-from=${ROOT}/backup.exclude.fs --extended-attributes ${drive}/ ${drive2}
 fi
