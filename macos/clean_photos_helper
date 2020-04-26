@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash -u
 
 # xattr is amazingly slow. Only call it if you
 # are absolutely certain the file actually has
@@ -6,8 +6,7 @@
 # pre-check.
 
 a=$( ls -aBl@ "$1" | grep "@" )
-if [[ ${#a} > 0 ]]
-then
+if [[ ${#a} > 0 ]] ; then
   # ls -l@ "$1"
   xattr -c "$1"
 fi

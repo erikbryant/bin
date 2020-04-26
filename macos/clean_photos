@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/local/bin/bash -eu
 
 if [[ "$1" == "" ]]
 then
@@ -11,23 +11,29 @@ HELPER="${0}_helper"
 for PHOTOROOT in $*
 do
   echo
-  echo "Searching for dotfiles in ${PHOTOROOT?} ..."
-  find ${PHOTOROOT?} -name .DS_Store -exec rm "{}" \;
-  find ${PHOTOROOT?} -name ".*"
+  echo "Searching for dotfiles in ${PHOTOROOT} ..."
+  find ${PHOTOROOT} -name .DS_Store -exec rm "{}" \;
+  find ${PHOTOROOT} -name ".*"
 
   echo
-  echo "Removing extended attributes from ${PHOTOROOT?} ..."
-  # Is much faster to use: ls -ablR@ | grep "@"
-  find ${PHOTOROOT?} -exec ${HELPER?} "{}" \;
+  echo "Removing extended attributes from ${PHOTOROOT} ..."
+  # Is much faster to use: ls -ablR@ | egrep "@"
+  find ${PHOTOROOT} -exec ${HELPER} "{}" \;
 
   echo
-  echo "Searching for filenames with non-standard characters in ${PHOTOROOT?} ..."
-  find ${PHOTOROOT?} | egrep "[^A-Za-z0-9./_-]"
+  echo "Searching for filenames with non-standard characters in ${PHOTOROOT} ..."
+  find ${PHOTOROOT} | egrep "[^A-Za-z0-9./_-]"
 
   echo
-  echo "Fixing permissions on files/dirs in ${PHOTOROOT?} ..."
-  chown -R root:wheel ${PHOTOROOT?}
-  find ${PHOTOROOT?} -type f -exec chmod 644 "{}" \;
-  find ${PHOTOROOT?} -type d -exec chmod 555 "{}" \;
+  echo "Fixing permissions on files/dirs in ${PHOTOROOT} ..."
+  # chown -R root:wheel ${PHOTOROOT}
+  find ${PHOTOROOT} -type f -exec chmod 644 "{}" \;
+  # find ${PHOTOROOT} -type d -exec chmod 555 "{}" \;
+
+  echo
+  echo "Searching for corrupt images in ${PHOTOROOT} ..."
+  for f in $( find ${PHOTOROOT} -type f ) ; do
+	identify ${f} 1>&-
+  done
 done
 

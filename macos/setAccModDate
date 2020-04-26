@@ -1,0 +1,56 @@
+#!/usr/local/bin/bash -eu
+
+function usage() {
+	echo "$@"
+
+	echo "Usage: $( basename $0 ) CCYYMMDD dirName"
+	echo
+	echo "Sets the creation and modified date on all entries"
+	echo "in 'dirName' directory to CCYYMMDDhhmm.SS where"
+	echo "CCYYMMDD is passed in and hhmm.ss starts at 1010.00"
+	echo "and increments for each entry in lexical order."
+
+	exit 1
+}
+
+function increment() {
+	TIME=$1
+
+	local HOUR=${TIME:0:2}
+	local MIN=${TIME:2:2}
+	local SEC=${TIME:5:2}
+
+	INCREMENT=5 # seconds
+
+	SEC=$(( ${SEC} + ${INCREMENT} ))
+	if [[ ${SEC} -ge 60 ]]; then
+		SEC=10 # two digits
+		MIN=$(( ${MIN} + 1 ))
+	fi
+	if [[ ${MIN} -ge 60 ]]; then
+		MIN=10 # two digits
+		HOUR=$(( ${HOUR} + 1 ))
+	fi
+	if [[ ${HOUR} -gt 23 ]]; then
+		echo "ERROR: HOUR is above 23. Use fewer photos or a smaller increment."
+		exit 1
+	fi
+
+	echo "${HOUR}${MIN}.${SEC}"
+}
+
+if [[ $# -ne 2 ]] ; then
+	usage 'You must supply two arguments'
+fi
+
+[ -d "$2" ] || usage "$2 is not a directory"
+
+DATE=$1
+cd $2
+
+TIME="1010.10"
+for f in * ; do
+	ACCMOD="${DATE}${TIME}"
+	touch -t ${ACCMOD} "${f}"
+	TIME=$( increment ${TIME} )
+done
