@@ -97,5 +97,5 @@ if [[ ${DRIVES} -gt 1 ]] ; then
   rsync -a --delete --itemize-changes --exclude-from=${ROOT}/backup.exclude.fs ${drive}/ ${drive2}
   echo
   echo 'Syncing extended attributes ...'
-  rsync -a --delete --exclude-from=${ROOT}/backup.exclude.fs --extended-attributes ${drive}/ ${drive2}
+  rsync -a --delete --exclude-from=${ROOT}/backup.exclude.fs --extended-attributes ${drive}/photos/ ${drive2}/photos
 fi

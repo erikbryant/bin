@@ -1,10 +1,10 @@
 .bash_sessions/
 Library/Application?Support/Active?Trader?Pro/
 Library/Application?Support/Google/Chrome/
-Library/Containers/com.apple.siri.media-indexer/
-Library/Caches
-Library/Logs
-Library/Calendars
-Library/com.apple.icloud.searchpartyd/
-Library/Application Support/zoom.us/
+Library/Application?Support/zoom.us/
+Library/Caches/
+Library/Calendars/
+Library/Containers/
+Library/Logs/
 Library/Metadata/CoreSpotlight/
+Library/com.apple.icloud.searchpartyd/

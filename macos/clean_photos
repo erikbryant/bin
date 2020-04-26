@@ -28,7 +28,7 @@ do
   echo "Fixing permissions on files/dirs in ${PHOTOROOT} ..."
   # chown -R root:wheel ${PHOTOROOT}
   find ${PHOTOROOT} -type f -exec chmod 644 "{}" \;
-  find ${PHOTOROOT} -type d -exec chmod 555 "{}" \;
+  # find ${PHOTOROOT} -type d -exec chmod 555 "{}" \;
 
   echo
   echo "Searching for corrupt images in ${PHOTOROOT} ..."
