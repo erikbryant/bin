@@ -1,3 +1,5 @@
 [user]
 	email = erikbryantology@gmail.com
 	name = Erik Bryant
+[credential]
+	helper = osxkeychain

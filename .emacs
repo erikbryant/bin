@@ -26,4 +26,3 @@
 ;; Call gofmt on save
 (add-to-list 'exec-path "/Users/tleyden/Development/gocode/bin")
 (add-hook 'before-save-hook 'gofmt-before-save)
-

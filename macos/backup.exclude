@@ -1,10 +1,14 @@
 .bash_sessions/
+Dropbox/.dropbox.cache/
 Library/Application?Support/Active?Trader?Pro/
 Library/Application?Support/Google/Chrome/
 Library/Application?Support/zoom.us/
 Library/Caches/
 Library/Calendars/
 Library/Containers/
+Library/Google/
 Library/Logs/
 Library/Metadata/CoreSpotlight/
 Library/com.apple.icloud.searchpartyd/
+Users/erikbryant/go/
+Users/erikbryant/dev/options/web-request-cache/
