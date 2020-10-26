@@ -1,11 +1,16 @@
 .bash_sessions/
+dev/options/web-request-cache/
 Dropbox/.dropbox.cache/
+go/bin
+go/pkg
+go/src
 Library/Application?Support/Active?Trader?Pro/
 Library/Application?Support/Google/Chrome/
 Library/Application?Support/zoom.us/
 Library/Caches/
 Library/Calendars/
 Library/Containers/
+Library/Developer/CoreSimulator/
 Library/Google/
 Library/Logs/
 Library/Metadata/CoreSpotlight/
