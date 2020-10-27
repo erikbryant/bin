@@ -5,6 +5,9 @@ go/bin
 go/pkg
 go/src
 Library/Application?Support/Active?Trader?Pro/
+Library/Application?Support/Battle.net/
+Library/Application?Support/Code/Cache/
+Library/Application?Support/Code/CachedData/
 Library/Application?Support/Google/Chrome/
 Library/Application?Support/zoom.us/
 Library/Caches/
@@ -12,6 +15,7 @@ Library/Calendars/
 Library/Containers/
 Library/Developer/CoreSimulator/
 Library/Google/
+Library/iTunes/iPhone Software Updates/
 Library/Logs/
 Library/Metadata/CoreSpotlight/
 Library/com.apple.icloud.searchpartyd/
