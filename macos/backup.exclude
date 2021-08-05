@@ -1,3 +1,4 @@
+.Trash/
 .DS_Store
 .bash_sessions/
 dev/options/web-request-cache/

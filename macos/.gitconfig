@@ -3,3 +3,5 @@
 	name = Erik Bryant
 [credential]
 	helper = osxkeychain
+[pull]
+	rebase = false
