@@ -33,7 +33,7 @@ do
   echo
   echo "Searching for corrupt images in ${PHOTOROOT} ..."
   for f in $( find ${PHOTOROOT} -type f ) ; do
-	identify ${f} 1>&-  # brew install imagemagick
+	identify ${f} 1>&-  # brew install imagemagick ffmpeg
   done
 done
 
