@@ -1,4 +1,4 @@
-#!/usr/local/bin/bash -eu
+#!/bin/bash -eu
 
 DMG=~/Dropbox/personal3.dmg
 VOL=/Volumes/personal2

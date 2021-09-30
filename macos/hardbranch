@@ -1,4 +1,4 @@
-#!/usr/local/bin/bash -eu
+#!/bin/bash -eu
 
 REPO=$1
 BRANCH=$2

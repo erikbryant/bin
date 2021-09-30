@@ -1,4 +1,4 @@
-#!/usr/local/bin/bash -u
+#!/bin/bash -u
 
 # xattr is amazingly slow. Only call it if you
 # are absolutely certain the file actually has

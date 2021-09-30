@@ -1,4 +1,4 @@
-#!/usr/local/bin/bash -u
+#!/bin/bash -u
 
 function usage() {
 	echo "$@"
