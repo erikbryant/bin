@@ -22,7 +22,7 @@ do
 
   echo
   echo "Searching for filenames with non-standard characters in ${PHOTOROOT} ..."
-  find ${PHOTOROOT} | egrep "[^A-Za-z0-9./_-]"
+  find ${PHOTOROOT} | egrep "[^A-Za-z0-9./_-]" || true
 
   echo
   echo "Fixing permissions on files/dirs in ${PHOTOROOT} ..."
@@ -33,7 +33,7 @@ do
   echo
   echo "Searching for corrupt images in ${PHOTOROOT} ..."
   for f in $( find ${PHOTOROOT} -type f ) ; do
-	identify ${f} 1>&-
+	identify ${f} 1>&-  # brew install imagemagick
   done
 done
 
