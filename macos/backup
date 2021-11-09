@@ -1,5 +1,10 @@
 #!/bin/bash -eu
 
+#
+# https://alecmuffett.com/article/12847
+# brew install rsync
+#
+
 ROOT=$( dirname $0 )
 
 function usage() {
@@ -81,7 +86,9 @@ echo "rsync ${src}"
 dest=${drive}/${computer}/${src}
 mkdir -p ${dest}
 
-rsync -a --delete --itemize-changes --exclude-from=${ROOT}/backup.exclude ${src}/ ${dest}
+# rsync has trouble with special characters on some destination filesystems.
+# Use --iconv to work around this. https://alecmuffett.com/article/12847
+rsync -a --delete --itemize-changes --iconv=utf-8-mac,utf-8-mac --exclude-from=${ROOT}/backup.exclude ${src}/ ${dest}
 
 src="/Users/photos"
 if [[ -d ${src} ]]
@@ -94,8 +101,8 @@ fi
 
 if [[ ${DRIVES} -gt 1 ]] ; then
   echo "Syncing drives together ..."
-  rsync -a --delete --itemize-changes --exclude-from=${ROOT}/backup.exclude.fs ${drive}/ ${drive2}
+  rsync -a --delete --itemize-changes --iconv=utf-8-mac,utf-8-mac --exclude-from=${ROOT}/backup.exclude.fs ${drive}/ ${drive2}
   echo
   echo 'Syncing extended attributes ...'
-  rsync -a --delete --exclude-from=${ROOT}/backup.exclude.fs --extended-attributes ${drive}/photos/ ${drive2}/photos
+  rsync -a --delete --iconv=utf-8-mac,utf-8-mac  --exclude-from=${ROOT}/backup.exclude.fs --extended-attributes ${drive}/photos/ ${drive2}/photos
 fi
