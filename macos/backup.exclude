@@ -1,6 +1,8 @@
 .Trash/
 .DS_Store
+.atom/
 .bash_sessions/
+.zsh_sessions/
 dev/options/web-request-cache/
 Dropbox/.dropbox.cache/
 go/bin
