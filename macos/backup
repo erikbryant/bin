@@ -44,6 +44,7 @@ function healthCheck() {
   dname=$( mount | egrep "$1 " | awk '{ print $1 }' )
 
   sudo fsck_hfs -fy -l ${dname} || usage "Health check failed. Run disk utility and select First Aid."
+  sudo --remove-timestamp  # Delete cached credentials
 }
 
 function AssertMounted() {
@@ -79,6 +80,7 @@ fi
 echo ""
 
 computer=$( hostname )
+echo "Using hostname: ${computer}"
 mkdir -p ${drive}/${computer}
 
 src="/Users/erikbryant"
