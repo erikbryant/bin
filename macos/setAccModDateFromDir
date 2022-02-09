@@ -1,5 +1,15 @@
 #!/bin/bash -eu
 
+# During handling, copying, editing, etc. the access and modification dates
+# on photos will get updated. When uploading a photo to Google Photos it
+# uses one of these dates as the "picture taken" date. If the photo is a
+# scan of a picture taken many years ago this can leave the date wildly
+# inaccurate.
+#
+# Assume that the containing directory is of the form YYYYMMDD_ccccc. From
+# The name of the directory, extract the day the photo was taken. Use that
+# date to set the access and modified dates on the file.
+
 function usage() {
   echo "$@"
   echo

@@ -1,5 +1,13 @@
 #!/bin/bash -eu
 
+# I would like to back my photo archive up to Google photos. Sadly, one
+# cannot specify a tree to upload; one can only specify a set of photos
+# from a single diirectory.
+#
+# Use xattrs to mark which photos have been uploaded. For any photo that
+# has not been uploaded yet, copy it to a staging directory. I can then
+# manually upload all files from that staging directory.
+
 function usage() {
 	echo "$@"
 	echo
@@ -72,4 +80,3 @@ for f in $( find "${ROOT_DIR}" -type f | egrep -i "[.](${EXTENSIONS})$" ) ; do
 		# break
 	fi
 done
-

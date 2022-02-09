@@ -1,5 +1,13 @@
 #!/bin/bash -eu
 
+# Doing things the brute force way.
+#
+# For a given branch in a git repository, create a new clone of that
+# repository set to that branch. This allows for multiple working
+# copies of the same branch without having to switch from one to
+# another in the same repository. Useful for things such as running
+# multiple simultaneous tests on various candidate code versions.
+
 REPO=$1
 BRANCH=$2
 ROOT=~/git/

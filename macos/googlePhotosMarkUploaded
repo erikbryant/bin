@@ -1,5 +1,8 @@
 #!/bin/bash -u
 
+# Once photos have been uploaded (see googlePhotosUpload script), they can
+# be marked as uploaded and deleted from the staging directory.
+
 function usage() {
 	echo "$@"
 	echo

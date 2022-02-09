@@ -4,6 +4,8 @@
 # https://alecmuffett.com/article/12847
 # brew install rsync
 #
+# Copy key files from the Mac to one backup drive.
+# Copy key files to one backup drive and then sync that drive to a second drive.
 
 ROOT=$( dirname $0 )
 

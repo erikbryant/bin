@@ -1,5 +1,9 @@
 #!/bin/bash -eu
 
+# Photos that have been copied from a camera or downloaded from the web
+# often have awkward file names or spurius xattrs. Clean all of those
+# issues up.
+
 if [[ "$1" == "" ]]
 then
   echo "Usage: $0 root_dir [root_dir2 ...]"
@@ -36,4 +40,3 @@ do
 	identify ${f} 1>&-  # brew install imagemagick ffmpeg
   done
 done
-

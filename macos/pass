@@ -1,5 +1,9 @@
 #!/bin/bash -eu
 
+# Search a set of text files for a given string. There is an encrypted
+# DMG file that has some passwords stored in text files. This script
+# mounts the DMG, prompts for a search string, and displays the results.
+
 DMG=~/Dropbox/personal3.dmg
 VOL=/Volumes/personal2
 DETACH=0
