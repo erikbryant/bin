@@ -43,7 +43,9 @@ function healthCheck() {
 
   dname=$( mount | egrep "$1 " | awk '{ print $1 }' )
 
-  sudo fsck_hfs -fy -l ${dname} || usage "Health check failed. Run disk utility and select First Aid."
+  # For older systems (CC still uses this)
+  #sudo fsck_hfs -fy -l ${dname} || usage "Health check failed. Run disk utility and select First Aid."
+  sudo fsck_apfs -l -n -W ${dname} || usage "Health check failed. Run disk utility and select First Aid."
   sudo --remove-timestamp  # Delete cached credentials
 }
 
