@@ -13,20 +13,24 @@
 function usage() {
   echo "$@"
   echo
-  echo "Usage: $( basename $0 ) dirName"
+  echo "Usage: $( basename $0 ) dirName [[dirName2] ... ]"
   echo
-  echo "Where dirName is of the form: foo/bar/bas/YYYYMMDD.*"
+  echo "Where dirName is of the form: /foo/bar/bas/YYYYMMDD.*"
   exit 1
 }
 
-[ $# -eq 1 ] || usage 'Wrong number of arguments.'
+[ $# -ge 1 ] || usage 'Wrong number of arguments.'
 
-DATED_DIR=$1
+while [[ $# -ge 1 ]] ; do
+  DATED_DIR=$1
 
-DATE=$( basename "${DATED_DIR}" )
-DATE=${DATE:0:8}
-echo ${DATE} | egrep "^\d{8}$" > /dev/null || usage "Could not extract date from ${DATED_DIR}. Found ${DATE}."
+  DATE=$( basename "${DATED_DIR}" )
+  DATE=${DATE:0:8}
+  echo ${DATE} | egrep "^\d{8}$" > /dev/null || usage "Could not extract date from ${DATED_DIR}. Found ${DATE}."
 
-ROOT=$( dirname $0 )
+  ROOT=$( dirname $0 )
 
-$ROOT/setAccModDate $DATE "${DATED_DIR}"
+  $ROOT/setAccModDate $DATE "${DATED_DIR}"
+
+  shift
+done
