@@ -1,4 +1,4 @@
-#!/bin/bash -eu
+#!/bin/zsh -eu
 
 # I would like to back my photo archive up to Google photos. Sadly, one
 # cannot specify a tree to upload; one can only specify a set of photos
@@ -25,7 +25,22 @@ while [ $# -ge 1 ] ; do
 ROOT_DIR="$1"
 echo "Scanning ${ROOT_DIR}"
 
-staging=/Volumes/Apricorn/staging.$(date "+%Y%m%dT%H%M%S")/
+# TODO: This assumes that the drive being scanned is /Volumes/Apricorn.
+# If that assumption is not true then the hard linking later will fail
+# and all this scanning and copying will have been wasted. Look at the
+# path to be scanned. If it is not /Volumes/Apricorn then come up with
+# a staging area that is on that volume.
+if [[ "${ROOT_DIR}" =~ "/Volumes/Apricorn/.*"  ]] ; then
+  staging=/Volumes/Apricorn/staging.$(date "+%Y%m%dT%H%M%S")/
+else
+  echo "###########################################################################"
+  echo "###########################################################################"
+  echo "#####         Scanned volume does not match /Volumes/Apricorn         #####"
+  echo "#####     Hardlinks will not work. DO NOT UPLOAD THESE FILES!!!!!     #####"
+  echo "###########################################################################"
+  echo "###########################################################################"
+  staging=/Volumes/Apricorn/staging.DO_NOT_UPLOAD.$(date "+%Y%m%dT%H%M%S")/
+fi
 mkdir -p ${staging}
 echo "Staging files to ${staging}"
 
@@ -34,6 +49,7 @@ MAX_FILES=200
 # Google Photos does not accept .RW2 files. Do not try to upload those.
 EXTENSIONS="png|gif|bmp|jpg|jpeg|NEF"
 
+# If there are any photos that Google rejects, add those here.
 SKIP_LIST=""
 
 COUNT=0
