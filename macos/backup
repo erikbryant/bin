@@ -105,10 +105,9 @@ then
   rsync -a --delete ${src}/ ${dest}
 fi
 
+# Copy the primary drive to a secondary (if one is attached).
 if [[ ${DRIVES} -gt 1 ]] ; then
   echo "Syncing drives together ..."
-  rsync -a --delete --itemize-changes --iconv=utf-8-mac,utf-8-mac --exclude-from=${ROOT}/backup.exclude.fs ${drive}/ ${drive2}
+  rsync -a --delete --itemize-changes --xattrs --iconv=utf-8-mac,utf-8-mac --exclude-from=${ROOT}/backup.exclude.fs ${drive}/ ${drive2}
   echo
-  echo 'Syncing extended attributes ...'
-  rsync -a --delete --xattrs --iconv=utf-8-mac,utf-8-mac  --exclude-from=${ROOT}/backup.exclude.fs ${drive}/photos/ ${drive2}/photos
 fi
