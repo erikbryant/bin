@@ -1,0 +1,6 @@
+#!/bin/zsh
+
+for f in .gitconfig .vimrc .zprofile .zshrc ; do
+  ln -s ~/bin/macos/$f ~/$f
+done
+
