@@ -107,7 +107,9 @@ fi
 
 # Copy the primary drive to a secondary (if one is attached).
 if [[ ${DRIVES} -gt 1 ]] ; then
+  echo
   echo "Syncing drives together ..."
+  echo
   rsync -a --delete --itemize-changes --xattrs --iconv=utf-8-mac,utf-8-mac --exclude-from=${ROOT}/backup.exclude.fs ${drive}/ ${drive2}
   echo
 fi
