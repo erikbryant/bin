@@ -2,6 +2,7 @@
 .DS_Store
 .atom/
 .bash_sessions/
+.dropbox/
 .zsh_sessions/
 dev/options/web-request-cache/
 Dropbox/.dropbox.cache/
