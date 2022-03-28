@@ -1,4 +1,4 @@
-#!/bin/bash -eu
+#!/bin/zsh -eu
 
 # Search a set of text files for a given string. There is an encrypted
 # DMG file that has some passwords stored in text files. This script

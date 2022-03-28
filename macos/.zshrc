@@ -1,5 +1,5 @@
 # This is where brew installs
-export PATH="/usr/local/sbin:$PATH"
+export PATH="/usr/local/sbin:/usr/local/mysql/bin:$PATH"
 PATH="$HOME/go/bin:$PATH"
 HISTSIZE=9999999999
 SAVEHIST=${HISTSIZE}

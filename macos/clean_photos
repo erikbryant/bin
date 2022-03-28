@@ -1,4 +1,4 @@
-#!/bin/bash -eu
+#!/bin/zsh -eu
 
 # Photos that have been copied from a camera or downloaded from the web
 # often have awkward file names or spurius xattrs. Clean all of those

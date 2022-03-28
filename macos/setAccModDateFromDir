@@ -1,4 +1,4 @@
-#!/bin/bash -eu
+#!/bin/zsh -eu
 
 # During handling, copying, editing, etc. the access and modification dates
 # on photos will get updated. When uploading a photo to Google Photos it
