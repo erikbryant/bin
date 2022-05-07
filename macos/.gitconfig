@@ -1,9 +1,12 @@
 [user]
 	email = erikbryantology@gmail.com
 	name = Erik Bryant
+	signingkey = 04CAFEAD5F44E4F2
 [credential]
 	helper = osxkeychain
 [pull]
 	rebase = false
 [init]
 	defaultBranch = main
+[commit]
+	gpgsign = true
