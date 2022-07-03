@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-for f in .gitconfig .vimrc .zprofile .zshrc ; do
+for f in .gitconfig .vimrc .zprofile .zshrc .zsenv ; do
   ln -s ~/bin/macos/$f ~/$f
 done
 
