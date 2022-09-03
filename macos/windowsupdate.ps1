@@ -24,7 +24,7 @@ Function Add-WindowsUpdate {
   $downloader = $updateSession.CreateUpdateDownloader()
   $downloader.Updates = $Updates
   write-output "Downloading $($downloader.Updates.count) updates ..."
-  $Result = $downloader.Download()  
+  $Result = $downloader.Download()
 
   if (($Result.Hresult -eq 0) –and (($result.resultCode –eq 2) -or ($result.resultCode –eq 3)) ) {
     $updatesToInstall = New-object -com "Microsoft.Update.UpdateColl"
@@ -36,7 +36,7 @@ Function Add-WindowsUpdate {
     $installationResult = $installer.Install()
     $Global:counter = -1
     $installer.updates | Format-Table -autosize -property Title,EulaAccepted,@{label='Result';
-                         expression={$ResultCode[$installationResult.GetUpdateResult($Global:Counter++).resultCode ] }} 
+                         expression={$ResultCode[$installationResult.GetUpdateResult($Global:Counter++).resultCode ] }}
 
     if ($installationResult.rebootRequired) {
       write-output "Reboot required. Rebooting now ..."

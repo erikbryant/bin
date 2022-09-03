@@ -9,4 +9,3 @@ for m in $( egrep '^\t' go.mod | egrep -v "// indirect" | awk '{ print $1 }' ) ;
 done
 
 go mod tidy
-
