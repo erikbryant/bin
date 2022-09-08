@@ -1,12 +1,11 @@
 #!/bin/zsh
 
 # Verify the go.mod file is valid
-go mod tidy
+go mod tidy -go=1.17 -compat=1.17
 
 for m in $( egrep '^\t' go.mod | egrep -v "// indirect" | awk '{ print $1 }' ) ; do
   echo "Looking at $m"
   go get -u $m
 done
 
-go mod tidy
-
+go mod tidy -go=1.17 -compat=1.17
