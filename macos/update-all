@@ -17,6 +17,7 @@ for repo in $( find ~ -name ".git" -type d -prune ) ; do
 
   if [[ -f go.mod ]] ; then
     ~/bin/macos/golang-modup
+    make test
   fi
 
   git pull
