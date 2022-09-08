@@ -1,0 +1,27 @@
+#!/bin/zsh -eu
+
+#
+# Update all the things.
+#
+
+brew doctor
+brew update
+brew upgrade
+
+for repo in $( find ~ -name ".git" -type d -prune ) ; do
+  R=$( dirname $repo )
+  echo
+  echo $R
+  echo
+  cd $R
+
+  if [[ -f go.mod ]] ; then
+    ~/bin/macos/golang-modup
+  fi
+
+  git pull
+  git status
+
+  cd
+  echo
+done
