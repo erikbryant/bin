@@ -15,12 +15,17 @@ for repo in $( find ~ -name ".git" -type d -prune ) ; do
   echo
   cd $R
 
+  # Ignore repositories that do not have a remote.
+  REMOTE=$( git remote -v )
+  if [[ "${REMOTE}" != "" ]] ; then
+    git pull
+  fi
+
   if [[ -f go.mod ]] ; then
     ~/bin/macos/golang-modup
     make test
   fi
 
-  git pull
   git status
 
   cd
