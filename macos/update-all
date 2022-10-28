@@ -4,6 +4,10 @@
 # Update all the things.
 #
 
+# MacOS software
+softwareupdate --all --install --force
+
+# Brew
 brew doctor
 brew update
 brew upgrade
