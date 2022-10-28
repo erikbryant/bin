@@ -21,11 +21,13 @@ for repo in $( find ~ -name ".git" -type d -prune ) ; do
     git pull
   fi
 
+  # Update any Golang modules.
   if [[ -f go.mod ]] ; then
     ~/bin/macos/golang-modup
     make test
   fi
 
+  # Display any modified files.
   git status
 
   cd
