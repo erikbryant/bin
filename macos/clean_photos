@@ -4,6 +4,8 @@
 # often have awkward file names or spurius xattrs. Clean all of those
 # issues up.
 
+# brew install imagemagick ffmpeg
+
 if [[ "$1" == "" ]]
 then
   echo "Usage: $0 root_dir [root_dir2 ...]"
