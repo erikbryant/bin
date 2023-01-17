@@ -13,16 +13,17 @@ Library/Application?Support/Active?Trader?Pro/
 Library/Application?Support/Battle.net/
 Library/Application?Support/Code/Cache/
 Library/Application?Support/Code/CachedData/
+Library/Application?Support/FileProvider/
 Library/Application?Support/Google/Chrome/
-Library/Application Support/discord/Cache/
+Library/Application?Support/discord/Cache/
 Library/Application?Support/zoom.us/
 Library/Caches/
 Library/Calendars/
 Library/Containers/
 Library/Developer/CoreSimulator/
 Library/Google/
-Library/Group Containers/group.com.apple.secure-control-center-preferences
-Library/iTunes/iPhone Software Updates/
+Library/Group?Containers/group.com.apple.secure-control-center-preferences
+Library/iTunes/iPhone?Software?Updates/
 Library/Logs/
 Library/Metadata/CoreSpotlight/
 Library/News/
