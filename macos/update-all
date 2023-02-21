@@ -4,6 +4,9 @@
 # Update all the things.
 #
 
+# Chrome
+open -a "Google Chrome" chrome://settings/help
+
 # MacOS software
 softwareupdate --all --install --force
 
