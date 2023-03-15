@@ -4,8 +4,10 @@
 # Update all the things.
 #
 
-# Chrome
+# Update Chrome, sync other apps
 open -a "Google Chrome" chrome://settings/help
+open -a messages
+open -a notes
 
 # MacOS software
 softwareupdate --all --install --force
@@ -15,6 +17,7 @@ brew doctor
 brew update
 brew upgrade
 
+# All of the git repos in my user dir
 for repo in $( find ~ -name ".git" -type d -prune ) ; do
   R=$( dirname $repo )
   echo
