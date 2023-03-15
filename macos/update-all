@@ -10,7 +10,7 @@ open -a messages
 open -a notes
 
 # MacOS software
-softwareupdate --all --install --force
+softwareupdate --all --install --force --verbose
 
 # Brew
 brew doctor
