@@ -1,0 +1,70 @@
+#!/bin/zsh -eu
+
+function type_fast {
+  basename "$1" | sed 's/.*[.]//g'
+}
+
+function compression {
+  identify -format "%C" "$1"
+}
+
+function small_enough {
+  size=$( stat -f %z "$1" )
+  [[ ${size} -lt 5000000 ]]
+}
+
+function shrink {
+  size=$( stat -f %z "$1" )
+
+  if $( small_enough "$1" ) ; then
+    return
+  fi
+
+  echo "Too large,slimming down: $1 ${size}"
+
+  convert -quality 90 "$1" "$1"
+
+  if $( small_enough "$1" ) ; then
+    return
+  fi
+
+  convert -quality 85 "$1" "$1"
+
+  if $( small_enough "$1" ) ; then
+    return
+  fi
+
+  echo "Too large, need to slim down: $1 ${size}"
+}
+
+while [[ "$*" != "" ]] ; do
+  file=$1
+  shift
+
+  if $( small_enough "$file" ) ; then
+    return
+  fi
+
+  type=$( type_fast "${file}" )
+
+  case "${type}" in
+    JPG)
+      ;;
+    JPEG)
+      ;;
+    jpg)
+      ;;
+    jpeg)
+      ;;
+    PNG)
+      ;;
+    png)
+      ;;
+    *)
+    echo "Skipping non-image file ${file}"
+      continue
+  esac
+
+  shrink "${file}"
+done
+
