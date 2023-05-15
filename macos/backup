@@ -85,7 +85,7 @@ fi
 
 echo ""
 
-computer=$( hostname )
+computer=$( hostname -s )
 echo "Using hostname: ${computer}"
 mkdir -p ${drive}/${computer}
 

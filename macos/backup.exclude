@@ -10,6 +10,8 @@ go/bin
 go/pkg
 go/src
 Library/Application?Support/Active?Trader?Pro/
+Library/Application?Support/Avast/
+Library/Application?Support/AvastHUB/
 Library/Application?Support/Battle.net/
 Library/Application?Support/Code/Cache/
 Library/Application?Support/Code/CachedData/
