@@ -10,7 +10,8 @@ open -a messages
 open -a notes
 
 # MacOS software
-softwareupdate --all --install --force --verbose
+echo "Updating MacOS software (requires privs)"
+sudo softwareupdate --all --install --force --verbose --restart
 
 # Brew
 brew doctor
