@@ -1,11 +1,14 @@
 #!/bin/zsh
 
+# golang version
+GOVER=1.20
+
 # Verify the go.mod file is valid
-go mod tidy -go=1.17 -compat=1.17
+go mod tidy -go=${GOVER} -compat=${GOVER}
 
 for m in $( egrep '^\t' go.mod | egrep -v "// indirect" | awk '{ print $1 }' ) ; do
   echo "Looking at $m"
   go get -u $m
 done
 
-go mod tidy -go=1.17 -compat=1.17
+go mod tidy -go=${GOVER} -compat=${GOVER}
