@@ -36,10 +36,9 @@ for repo in $( find ~ -name ".git" -type d -prune ) ; do
   if [[ -f go.mod ]] ; then
     ~/bin/macos/golang-modup
     make test
+    # Make the changes (if any) permanent
+    (git add go.mod go.sum && git commit -m 'Update to latest modules' && git push) || true
   fi
-
-  # Display any modified files.
-  git status
 
   cd
   echo
