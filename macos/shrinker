@@ -81,7 +81,6 @@ while [[ "$*" != "" ]] ; do
   esac
 
   if $( small_enough "$file" ) ; then
-    echo "File is already small enough: ${file}"
     continue
   fi
 
