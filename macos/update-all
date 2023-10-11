@@ -4,15 +4,15 @@
 # Update all the things.
 #
 
-# Update Chrome, sync other apps
-open -a "Google Chrome" chrome://settings/help
-open -a messages
-open -a notes
-
 # MacOS software
 echo "Updating MacOS software (requires privs)"
 sudo softwareupdate --all --install --force --verbose --restart
 sudo --remove-timestamp  # Delete cached credentials
+
+# Update Chrome, sync other apps
+open -a "Google Chrome" chrome://settings/help
+open -a messages
+open -a notes
 
 # Brew
 brew doctor
