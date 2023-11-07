@@ -1,14 +1,28 @@
 #!/bin/zsh
 
 # golang version
-GOVER=1.20
+GOVER=1.21
+
+[[ ! -f go.mod ]] && exit
 
 # Verify the go.mod file is valid
 go mod tidy -go=${GOVER} -compat=${GOVER}
 
-for m in $( egrep '^\t' go.mod | egrep -v "// indirect" | awk '{ print $1 }' ) ; do
-  echo "Looking at $m"
-  go get -u $m
-done
+# If that changed go.mod, check it in
+git diff --quiet go.mod || (git add go.mod && git commit -m 'go mod tidy' && git push)
+
+[[ ! -f go.sum ]] && exit
+
+# Update all of the modules
+go get -u ./...
 
 go mod tidy -go=${GOVER} -compat=${GOVER}
+
+# If no changes, exit
+git diff --quiet go.mod go.sum && exit
+
+# Verify the new modules (if any) work
+make test
+
+# Make the changes permanent
+(git add go.mod go.sum && git commit -m 'Update to latest modules' && git push) || true

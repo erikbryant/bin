@@ -1,7 +1,7 @@
 #!/bin/zsh -eu
 
 #
-# Update all the things.
+# Update all the software on this Mac
 #
 
 # MacOS software
@@ -20,28 +20,19 @@ brew doctor
 brew update
 brew upgrade
 
-# All of the git repos in my user dir
+# Update all of the git repos in my user dir
 for repo in $( find ~ -name ".git" -type d -prune ) ; do
   R=$( dirname $repo )
   echo
+  echo
   echo $R
   echo
+
   cd $R
 
-  # Ignore repositories that do not have a remote.
-  REMOTE=$( git remote -v )
-  if [[ "${REMOTE}" != "" ]] ; then
-    git pull
-  fi
+  # Only pull if there is a remote
+  [[ "$( git remote -v )" != "" ]] && git pull
 
-  # Update any Golang modules.
-  if [[ -f go.mod ]] ; then
-    ~/bin/macos/golang-modup
-    make test
-    # Make the changes (if any) permanent
-    (git add go.mod go.sum && git commit -m 'Update to latest modules' && git push) || true
-  fi
-
-  cd
-  echo
+  # Update golang modules
+  ~/bin/macos/golang-modup
 done
