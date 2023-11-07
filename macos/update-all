@@ -13,6 +13,7 @@ sudo --remove-timestamp  # Delete cached credentials
 open -a "Google Chrome" chrome://settings/help
 open -a messages
 open -a notes
+open -a zoom.us
 
 # Brew
 brew doctor
