@@ -1,1 +1,1 @@
-PS1='%*(%?)%1d$ '
+eval "$(/opt/homebrew/bin/brew shellenv)"

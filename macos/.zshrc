@@ -20,4 +20,5 @@ setopt HIST_VERIFY               # Don't execute immediately upon history expans
 
 alias ls='ls --color'
 
-egrep '^PS1=' /etc/zshrc && echo 'Warning! Wrong prompt is set!' || true
+PROMPT='%*(%?)%1d$ '
+
