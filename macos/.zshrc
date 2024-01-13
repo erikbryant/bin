@@ -18,6 +18,7 @@ setopt HIST_VERIFY               # Don't execute immediately upon history expans
 # setopt BANG_HIST                 # Treat the '!' character specially during expansion.
 # setopt HIST_BEEP                 # Beep when accessing nonexistent history.
 
+export LSCOLORS=cxfxexdxbxegedabagacad
 alias ls='ls --color'
 
 PROMPT='%*(%?)%1d$ '
