@@ -17,6 +17,7 @@ open -a zoom.us
 
 # Brew
 brew doctor
+brew cleanup
 brew update
 brew upgrade
 
