@@ -1,5 +1,5 @@
 # This is where brew installs
-export PATH="/usr/local/sbin:/usr/local/mysql/bin:$PATH"
+export PATH="$PATH:/Users/erikbryant/.jetbrains"
 HISTSIZE=9999999999
 SAVEHIST=${HISTSIZE}
 HISTFILESIZE=${HISTSIZE}
