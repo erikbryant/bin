@@ -1,0 +1,5 @@
+# Local files
+.DS_Store
+.idea/
+.fleet/
+.vscode/
