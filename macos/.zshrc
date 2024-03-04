@@ -23,3 +23,5 @@ alias ls='ls --color'
 
 PROMPT='%*(%?)%1d$ '
 
+BCLM=$( bclm read ) ; [[ $BCLM -eq 80 ]] || echo "!!!! WARNING   BCLM == ${BCLM}"
+
