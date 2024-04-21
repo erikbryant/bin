@@ -5,31 +5,34 @@
 #
 
 # MacOS software
-echo "Updating MacOS software (requires privs)"
+echo "Updating MacOS software (requires privileges)"
 sudo softwareupdate --all --install --force --verbose --restart
 sudo --remove-timestamp  # Delete cached credentials
 
-# Update Chrome, sync other apps
+# Update/sync apps
 open -a "Google Chrome" chrome://settings/help
+open -a Battle.net.app
+open -a JetBrains\ Toolbox.app
 open -a messages
 open -a notes
-open -a zoom.us
+#open -a zoom.us
 
 # Brew
 brew doctor
 brew cleanup
 brew update
 brew upgrade
+brew cleanup
 
 # Update all of the git repos in my user dir
 for repo in $( find ~ -name ".git" -type d -prune ) ; do
-  R=$( dirname $repo )
+  R=$( dirname "${repo}" )
   echo
   echo
-  echo $R
+  echo "${R}"
   echo
 
-  cd $R
+  cd "${R}"
 
   # Only pull if there is a remote
   [[ "$( git remote -v )" != "" ]] && git pull
