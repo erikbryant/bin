@@ -6,7 +6,7 @@ GOVER=$( go version | awk '{ print $3 }' | sed 's/go//1' )
 [[ ! -f go.mod ]] && exit
 
 # Verify the go.mod file is valid
-go mod tidy -go=${GOVER} -compat=${GOVER}
+go mod tidy -go="${GOVER}" -compat="${GOVER}"
 
 # If that changed go.mod, check it in
 git diff --quiet go.mod || (git add go.mod && git commit -m 'go mod tidy' && git push)
@@ -16,7 +16,7 @@ git diff --quiet go.mod || (git add go.mod && git commit -m 'go mod tidy' && git
 # Update all of the modules
 go get -u ./...
 
-go mod tidy -go=${GOVER} -compat=${GOVER}
+go mod tidy -go="${GOVER}" -compat="${GOVER}"
 
 # If no changes, exit
 git diff --quiet go.mod go.sum && exit
