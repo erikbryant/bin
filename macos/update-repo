@@ -1,0 +1,19 @@
+#!/bin/zsh -eu
+
+#
+# Update files in a given repo, including go modules
+#
+
+R=$( dirname "$1" )
+echo
+echo
+echo "${R}"
+echo
+
+cd "${R}"
+
+# Only pull if there is a remote
+[[ "$( git remote -v )" != "" ]] && git pull
+
+# Update golang modules
+~/bin/macos/golang-modup
