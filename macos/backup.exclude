@@ -4,6 +4,7 @@
 .bash_sessions/
 .dropbox/
 .zsh_sessions/
+Applications/
 dev/options/web-request-cache/
 dev/datafiles/
 Dropbox/.dropbox.cache/
