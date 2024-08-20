@@ -29,6 +29,7 @@ updateBrew () {
   brew update
   brew upgrade
   brew cleanup
+  brew doctor
 }
 
 # Update all of the git repos in the user's tree
