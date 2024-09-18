@@ -19,7 +19,7 @@ updateSoftware () {
   open -a JetBrains\ Toolbox.app
   open -a messages
   open -a notes
-  #open -a zoom.us
+  open -a zoom.us
 }
 
 # Update everything that brew manages
