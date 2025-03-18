@@ -40,3 +40,7 @@ updateRepos () {
 updateSoftware
 updateBrew
 updateRepos
+
+echo
+echo
+echo "Publish releases for: aes, beepspeak, dictionaries, util-golang, web"
