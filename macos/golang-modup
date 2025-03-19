@@ -21,7 +21,7 @@ go mod tidy -go="${GOVER}" -compat="${GOVER}"
 # If no changes, exit
 git diff --quiet go.mod go.sum && exit
 
-# Verify the new modules (if any) work
+# Verify the new modules work
 make test
 
 # Make the changes permanent
