@@ -7,7 +7,7 @@
 R=$( dirname "$1" )
 echo
 echo
-echo "${R}"
+print -P "%F{green}${R}%f"
 echo
 
 cd "${R}"
