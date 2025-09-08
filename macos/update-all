@@ -20,6 +20,8 @@ updateSoftware () {
   open -a messages
   open -a notes
   open -a zoom.us
+  open -a whatsApp.app
+  open -a telegram.app
 }
 
 # Update everything that brew manages
