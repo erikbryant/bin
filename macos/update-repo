@@ -4,16 +4,22 @@
 # Update files in a given repo, including go modules
 #
 
-R=$( dirname "$1" )
+# Update all of the go.mod files in this tree
+updateGoModules () {
+  ~/bin/macos/golang-modup
+  find . -name 'go.mod' -type f -prune -exec ~/bin/macos/golang-modup {} \;
+}
+
+REPO=$( dirname "$1" )
 echo
 echo
-print -P "%F{green}${R}%f"
+print -P "%F{green}${REPO}%f"
 echo
 
-cd "${R}"
+cd "${REPO}"
 
 # Only pull if there is a remote
 [[ "$( git remote -v )" != "" ]] && git pull
 
 # Update golang modules
-~/bin/macos/golang-modup
+updateGoModules
