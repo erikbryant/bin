@@ -1,4 +1,10 @@
-#!/bin/zsh
+#!/bin/zsh -eu
+
+if (( ${+1} )) ; then
+  DIRNAME=$( dirname "$1" )
+  cd "${DIRNAME}" || exit
+fi
+
 
 # golang version
 GOVER=$( go version | awk '{ print $3 }' | sed 's/go//1' )
@@ -22,7 +28,11 @@ go mod tidy -go="${GOVER}" -compat="${GOVER}"
 git diff --quiet go.mod go.sum && exit
 
 # Verify the new modules work
-make test
+if [[ -f Makefile ]] ; then
+  make test
+else
+  go test ./...
+fi
 
 # Make the changes permanent
 (git add go.mod go.sum && git commit -m 'Update to latest modules' && git push) || true
