@@ -24,5 +24,5 @@ alias ls='ls --color'
 PROMPT='%*(%?)%1d$ '
 
 # https://github.com/zackelia/bclm
-BCLM=$( bclm read ) ; [[ $BCLM -eq 80 ]] || echo "!!!! WARNING   BCLM == ${BCLM}"
+#BCLM=$( bclm read ) ; [[ $BCLM -eq 80 ]] || echo "!!!! WARNING   BCLM == ${BCLM}"
 
