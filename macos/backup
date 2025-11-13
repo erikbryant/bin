@@ -10,7 +10,7 @@
 ROOT=$( dirname $0 )
 
 function usage() {
-  echo $@
+  echo "$@"
   echo
   echo "Usage: $( basename $0 ) 1|2 [--no-health-check]"
   exit 1
@@ -89,23 +89,17 @@ computer=$( hostname -s )
 echo "Using hostname: ${computer}"
 mkdir -p ${drive}/${computer}
 
-src="/Users/erikbryant"
-echo "rsync ${src}"
+src="${HOME}"
+echo "rsync ${src} ..."
 dest=${drive}/${computer}/${src}
 mkdir -p ${dest}
 
 # rsync has trouble with special characters on some destination filesystems.
 # Use --iconv to work around this. https://alecmuffett.com/article/12847
 rsync -a --delete --itemize-changes --iconv=utf-8-mac,utf-8-mac --exclude-from=${ROOT}/backup.exclude ${src}/ ${dest}
-
-src="/Users/photos"
-if [[ -d ${src} ]]
-then
-  echo "rsync ${src}"
-  dest=${drive}/${computer}/${src}
-  mkdir -p ${dest}
-  rsync -a --delete ${src}/ ${dest}
-fi
+echo
+echo "Syncing Dropbox files ..."
+rsync -a --delete --itemize-changes --iconv=utf-8-mac,utf-8-mac ${src}/Library/CloudStorage/Dropbox ${drive}
 
 # Copy the primary drive to a secondary (if one is attached).
 if [[ ${DRIVES} -gt 1 ]] ; then
