@@ -1,0 +1,23 @@
+##
+# Host Database
+#
+# localhost is used to configure the loopback interface
+# when the system is booting.  Do not change this entry.
+##
+127.0.0.1	localhost
+255.255.255.255	broadcasthost
+::1             localhost
+
+127.0.0.1 d3cdqaxt2ss98r.cloudfront.net
+127.0.0.1 d77iwu98qeyzt.cloudfront.net
+127.0.0.1 tiktok.com
+127.0.0.1 www.tiktok.com
+127.0.0.1 brwsrfrm.com
+127.0.0.1 s0.2mdn.net
+127.0.0.1 pnytimes.chartbeat.net
+127.0.0.1 a.et.nytimes.com
+127.0.0.1 sb.scorecardresearch.com
+127.0.0.1 vp.nyt.com
+127.0.0.1 doubleclick.net
+127.0.0.1 googleads.g.doubleclick.net
+127.0.0.1 snapchat.com
