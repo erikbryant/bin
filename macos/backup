@@ -100,6 +100,8 @@ rsync -a --delete --itemize-changes --iconv=utf-8-mac,utf-8-mac --exclude-from=$
 echo
 echo "Syncing Dropbox files ..."
 rsync -a --delete --itemize-changes --iconv=utf-8-mac,utf-8-mac ${src}/Library/CloudStorage/Dropbox ${drive}
+echo "Synicing /etc/hosts ..."
+rsync -a --delete --itemize-changes --iconv=utf-8-mac,utf-8-mac /etc/hosts ${drive}/etc/
 
 # Copy the primary drive to a secondary (if one is attached).
 if [[ ${DRIVES} -gt 1 ]] ; then
@@ -109,3 +111,4 @@ if [[ ${DRIVES} -gt 1 ]] ; then
   rsync -a --delete --itemize-changes --xattrs --iconv=utf-8-mac,utf-8-mac --exclude-from=${ROOT}/backup.exclude.fs ${drive}/ ${drive2}
   echo
 fi
+
