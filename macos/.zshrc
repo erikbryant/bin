@@ -1,5 +1,9 @@
-# This is where brew installs
+# This is where Jetbrains installs
 export PATH="$PATH:/Users/erikbryant/.jetbrains"
+
+# Golang binaries
+export PATH="$PATH:$(go env GOPATH)/bin"
+
 HISTSIZE=9999999999
 SAVEHIST=${HISTSIZE}
 HISTFILESIZE=${HISTSIZE}
