@@ -1,10 +1,11 @@
 #!/bin/zsh -eu
 
 # Photos that have been copied from a camera or downloaded from the web
-# often have awkward file names or spurius xattrs. Clean all of those
-# issues up.
+# often have awkward file names or spurius xattrs. Fix all that.
 
-# brew install imagemagick ffmpeg
+# brew install imagemagick ghostscript
+# brew tap homebrew-ffmpeg/ffmpeg
+# brew install homebrew-ffmpeg/ffmpeg/ffmpeg --with-webp
 
 if [[ "$1" == "" ]]
 then
@@ -12,33 +13,28 @@ then
   exit 1
 fi
 
-HELPER="${0}_helper"
-
-for PHOTOROOT in $*
+for PHOTO_ROOT in "$@"
 do
   echo
-  echo "Searching for dotfiles in ${PHOTOROOT} ..."
-  find ${PHOTOROOT} -name .DS_Store -exec rm "{}" \;
-  find ${PHOTOROOT} -name ".*"
+  echo "Searching for dotfiles in ${PHOTO_ROOT} ..."
+  find "${PHOTO_ROOT}" -name .DS_Store -print0 | xargs -0 rm
+  find "${PHOTO_ROOT}" -name ".*"
 
   echo
-  echo "Removing extended attributes from ${PHOTOROOT} ..."
-  # Is much faster to use: ls -ablR@ | egrep "@"
-  find ${PHOTOROOT} -exec ${HELPER} "{}" \;
+  echo "Removing extended attributes from ${PHOTO_ROOT} ..."
+  find "${PHOTO_ROOT}" -print0 | xargs -0 xattr -c
 
   echo
-  echo "Searching for filenames with non-standard characters in ${PHOTOROOT} ..."
-  find ${PHOTOROOT} | egrep "[^A-Za-z0-9./_-]" || true
+  echo "Searching for filenames with non-standard characters in ${PHOTO_ROOT} ..."
+  find "${PHOTO_ROOT}" | egrep "[^A-Za-z0-9./_-]" || true
 
   echo
-  echo "Fixing permissions on files/dirs in ${PHOTOROOT} ..."
-  # chown -R root:wheel ${PHOTOROOT}
-  find ${PHOTOROOT} -type f -exec chmod 644 "{}" \;
-  # find ${PHOTOROOT} -type d -exec chmod 555 "{}" \;
+  echo "Fixing permissions on files/dirs in ${PHOTO_ROOT} ..."
+  # chown -R root:wheel "${PHOTO_ROOT}"
+  find "${PHOTO_ROOT}" -type f -print0 | xargs -0 chmod 444
+  find "${PHOTO_ROOT}" -type d -print0 | xargs -0 chmod 555
 
   echo
-  echo "Searching for corrupt images in ${PHOTOROOT} ..."
-  for f in $( find ${PHOTOROOT} -type f ) ; do
-	identify ${f} 1>&-  # brew install imagemagick ffmpeg
-  done
+  echo "Searching for corrupt images in ${PHOTO_ROOT} ..."
+  find "${PHOTO_ROOT}" -type f -not \( -name "*.def" -o -name "*.txt" \) -print0 | xargs -0 -I {} identify {} > /dev/null
 done
