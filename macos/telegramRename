@@ -1,7 +1,7 @@
 #!/bin/zsh -eu
 
-# Photos saved from Telegram have an awkward naming.
-# Simplify that.
+# Photos saved from Telegram have an awkward naming. Simplify that.
+#  photo_2026-08-26 08.31.11.jpeg  ->  20260826_08.31.11.jpeg
 
 for OLD_NAME in "$@"
 do
