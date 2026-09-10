@@ -13,6 +13,8 @@ then
   exit 1
 fi
 
+ROOT_DIR=$( dirname "$0" )
+
 for PHOTO_ROOT in "$@"
 do
   echo
@@ -36,5 +38,5 @@ do
 
   echo
   echo "Searching for corrupt images in ${PHOTO_ROOT} ..."
-  find "${PHOTO_ROOT}" -type f -not \( -name "*.txt" -o -name "*.html" -o -name "*.json" -o -name "*.amr" \) -print0 | xargs -0 -I {} identify {} > /dev/null
+  "${ROOT_DIR}"/clean_photos_fast.py "${PHOTO_ROOT}"
 done

@@ -330,6 +330,10 @@ def check_dependencies():
 
 
 def main():
+    if len(sys.argv) < 2:
+        print("ERROR: At least one directory/file argument is required")
+        return 1
+
     if not check_dependencies():
         return 2
 
@@ -338,8 +342,7 @@ def main():
     skipped = 0
     live_photos_found = 0
 
-    for i in range(1, len(sys.argv)):
-        name = sys.argv[i]
+    for name in sys.argv[1:]:
         if Path(name).is_dir():
             files = list(discover_files(name))
         else:
@@ -358,7 +361,7 @@ def main():
     print(f"Live Photos:  {live_photos_found}")
 
     if bad:
-        return 1
+        return 3
 
     return 0
 
