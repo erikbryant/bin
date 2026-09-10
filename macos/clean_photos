@@ -36,5 +36,5 @@ do
 
   echo
   echo "Searching for corrupt images in ${PHOTO_ROOT} ..."
-  find "${PHOTO_ROOT}" -type f -not \( -name "*.txt" -o -name "*.html" -o -name "*.json" \) -print0 | xargs -0 -I {} identify {} > /dev/null
+  find "${PHOTO_ROOT}" -type f -not \( -name "*.txt" -o -name "*.html" -o -name "*.json" -o -name "*.amr" \) -print0 | xargs -0 -I {} identify {} > /dev/null
 done
