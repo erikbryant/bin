@@ -173,6 +173,22 @@ def validate_video(path):
     return False, error
 
 
+def validate_pdf(path):
+    """
+    Validate file structure and syntax. Does not validate whether
+    the file would successfully render.
+    """
+    success, error = run_command([
+        "qpdf",
+        "--check", str(path),
+    ])
+
+    if success:
+        return True, ""
+
+    return False, error
+
+
 def discover_files(root):
     """
     Recursively discover files without making assumptions about filenames.
@@ -247,9 +263,8 @@ def scan_files(files):
             validator = validate_video
 
         elif ext in PDF_EXTENSIONS:
-            print(f"ERROR: Not implemented! {path}")
-            bad += 1
-            continue
+            media_type = "pdf"
+            validator = validate_pdf
 
         elif ext in SKIPPABLE_EXTENSIONS:
             continue
@@ -311,7 +326,7 @@ def scan_files(files):
 
 
 def check_dependencies():
-    required = ["magick", "ffmpeg", "heif-convert"]
+    required = ["magick", "ffmpeg", "heif-convert", "qpdf"]
 
     missing = [
         command
