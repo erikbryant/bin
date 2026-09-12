@@ -8,3 +8,4 @@ do
   NEW_NAME=$( echo "${OLD_NAME}" | sed 's/photo_//g' | sed 's/-//g' | sed 's/ /_/g' )
   mv "${OLD_NAME}" "${NEW_NAME}"
 done
+
