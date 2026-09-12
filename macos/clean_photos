@@ -24,7 +24,7 @@ do
 
   echo
   echo "Removing extended attributes from ${PHOTO_ROOT} ..."
-  find "${PHOTO_ROOT}" -print0 | xargs -0 xattr -c
+  xattr -rc "${PHOTO_ROOT}"
 
   echo
   echo "Searching for filenames with non-standard characters in ${PHOTO_ROOT} ..."
