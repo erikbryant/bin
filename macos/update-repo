@@ -1,7 +1,8 @@
 #!/bin/zsh -eu
 
 #
-# Update files in a given repo, including go modules
+# Update files in the given git repos, including go modules
+# Give it the path to the repo or to the .git directory in the repo
 #
 
 # Update all of the go.mod files in this tree
@@ -10,16 +11,27 @@ updateGoModules () {
   find . -name 'go.mod' -type f -prune -exec ~/bin/macos/golang-modup {} \;
 }
 
-REPO=$( dirname "$1" )
-echo
-echo
-print -P "%F{green}${REPO}%f"
-echo
+# Update a single git repo
+updateRepo () {
+  REPO=$1
 
-cd "${REPO}"
+  echo
+  echo
+  print -P "%F{green}${REPO}%f"
+  echo
 
-# Only pull if there is a remote
-[[ "$( git remote -v )" != "" ]] && git pull
+  cd "${REPO}"
 
-# Update golang modules
-updateGoModules
+  # Only pull if there is a remote
+  [[ "$( git remote -v )" != "" ]] && git pull
+
+  # Update golang modules
+  updateGoModules
+}
+
+for GIT_REPO in "$@"
+do
+  # Remove trailing "/.git" if present
+  GIT_REPO=${GIT_REPO/%\/.git/}
+  updateRepo "${GIT_REPO}"
+done

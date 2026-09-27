@@ -29,14 +29,14 @@ updateBrew () {
   brew doctor
   brew cleanup
   brew update
-  brew upgrade
+  brew upgrade --yes
   brew cleanup
   brew doctor
 }
 
 # Update all of the git repos in the user's tree
 updateRepos () {
-  find ~ -name '.git' -type d -prune -exec "${ROOT}/update-repo" {} \;
+  find ~ -name '.git' -type d -prune -print0 | xargs -0 "${ROOT}/update-repo"
 }
 
 updateSoftware
