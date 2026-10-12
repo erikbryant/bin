@@ -5,12 +5,6 @@
 # Give it the path to the repo or to the .git directory in the repo
 #
 
-# Update all of the go.mod files in this tree
-updateGoModules () {
-  ~/bin/macos/golang-modup
-  find . -name 'go.mod' -type f -prune -exec ~/bin/macos/golang-modup {} \;
-}
-
 # Update a single git repo
 updateRepo () {
   REPO=$1
@@ -25,8 +19,8 @@ updateRepo () {
   # Only pull if there is a remote
   [[ "$( git remote -v )" != "" ]] && git pull
 
-  # Update golang modules
-  updateGoModules
+  # Update all of the go.mod files in this tree
+  find . -name 'go.mod' -type f -prune -exec ~/bin/macos/golang-modup {} \;
 }
 
 for GIT_REPO in "$@"
